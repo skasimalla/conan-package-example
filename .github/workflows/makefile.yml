@@ -21,7 +21,8 @@ jobs:
           echo "Create complete"
 
           conan version
-          conan remote add conan-dev-local https://soleng.jfrog.io/artifactory/conan-dev-local/
+          conan remote add conan-dev-local "https://soleng.jfrog.io/artifactory/conan-dev-local/"
+          echo "Remote added "
           conan remote login conan-dev-local sam -p ${{ secrets.ARTIFACTORY_ACCESS_TOKEN }}
           
           #conan list --graph=create.json --graph-binaries=build --format=json > pkglist.json
