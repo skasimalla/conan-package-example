@@ -13,14 +13,7 @@ jobs:
       - name: Install Conan
         uses: turtlebrowser/get-conan@main
 
-      # This command adds a new server configuration to the JFrog CLI   
       - run: |
-          export SERVER_ID="test"
-          jf c add $SERVER_ID --url=$URL --access-token=$ACCESS_TOKEN --interactive=false
-
-      - run: |
-
-          sudo apt-get install gcc g++ cmake  
           
           conan create . 
 
