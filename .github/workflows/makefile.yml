@@ -1,0 +1,41 @@
+name: Push Build to Artifactory
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+   
+    steps:
+      # This action checks out the code from the repository
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Install Conan
+        uses: turtlebrowser/get-conan@main
+
+      # This action sets up the JFrog CLI with the Artifactory URL and access token     
+      - name: Install and config JF CLI
+        uses: jfrog/setup-jfrog-cli@v3
+        env:
+          JF_URL: ${{ secrets.ARTIFACTORY_URL }}
+          JF_ACCESS_TOKEN: ${{ secrets.ARTIFACTORY_ACCESS_TOKEN }}
+
+      # This command adds a new server configuration to the JFrog CLI   
+      - run: |
+          export SERVER_ID="test"
+          jf c add $SERVER_ID --url=$URL --access-token=$ACCESS_TOKEN --interactive=false
+
+      - run: |
+          jf rt ping
+
+          sudo apt-get install gcc g++ cmake  
+          
+          conan create . 
+
+          conan remote add conan-dev-local https://soleng.jfrog.io/artifactory/conan-dev-local/
+          #conan remote login conan-dev-local sam -p ${{ secrets.ARTIFACTORY_PASSWORD }}
+          
+          conan list --graph=create.json --graph-binaries=build --format=json > pkglist.json
+          #conan upload --list=pkglist.json -r=conan-dev-local -c
+          
+          conan upload hello -r=conan-dev-local -c
