@@ -21,7 +21,7 @@ jobs:
           echo "Create complete"
 
           conan version
-          conan remote add conan-dev-local https:soleng.jfrog.io/artifactory/api/conan/conan-dev-local -f
+          conan remote add conan-dev-local https://soleng.jfrog.io/artifactory/api/conan/conan-dev-local -f
           echo "Remote added "
           conan remote login conan-dev-local sam -p ${{ secrets.ARTIFACTORY_ACCESS_TOKEN }}
           
