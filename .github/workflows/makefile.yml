@@ -14,7 +14,8 @@ jobs:
         uses: turtlebrowser/get-conan@main
 
       - run: |
-          
+
+          conan profile detect
           conan create . 
 
           conan remote add conan-dev-local https://soleng.jfrog.io/artifactory/conan-dev-local/
