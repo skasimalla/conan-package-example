@@ -15,9 +15,11 @@ jobs:
 
       - run: |
 
-          #conan profile detect
+          conan profile detect
           conan create . 
 
+          echo "Create complete"
+          
           conan remote add conan-dev-local https://soleng.jfrog.io/artifactory/conan-dev-local/
           conan remote login conan-dev-local sam -p ${{ secrets.ARTIFACTORY_ACCESS_TOKEN }}
           
