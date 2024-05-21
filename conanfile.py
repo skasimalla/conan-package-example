@@ -1,3 +1,5 @@
+import os
+
 from conan import ConanFile
 from conan.tools.cmake import CMakeToolchain, CMake, cmake_layout, CMakeDeps
 
@@ -5,6 +7,7 @@ from conan.tools.cmake import CMakeToolchain, CMake, cmake_layout, CMakeDeps
 class helloRecipe(ConanFile):
     name = "hello"
     version = "1.1"
+    version = os.getenv('BUILD_NUMBER')
     package_type = "library"
 
     # Optional metadata
